@@ -38,6 +38,6 @@ def home(name = __name__, server = True, routes_pathname_prefix = '/'):
 
 	return app
 
-# if __name__ == '__main__':
-# 	app = home()
-# 	app.run_server(debug=True)
+if __name__ == '__main__':
+	app = home()
+	app.run_server(debug=True)

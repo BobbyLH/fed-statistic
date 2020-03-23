@@ -1,4 +1,5 @@
-from flask import Flask, escape, request
+from flask import Flask, escape, request, url_for
+from markupsafe import escape
 import sys
 sys.path.append('./source/')
 from view.home import home
@@ -12,19 +13,21 @@ home(
   server = app,
   routes_pathname_prefix = '/'
 )
-
+uuid = 'f9958eac-ad8f-41d4-9647-b5c22a5b2ead'
 # track
-@app.route('/track')
+@app.route('/track', methods=['GET', 'POST'])
 def track():
   name = request.args.get('name', 'world')
-  return f'Hello, {escape(name)}'
+  if request.method == 'POST':
+    return '{} Hello'.format(escape(name))
+  else:
+    return f'Hello, {escape(name)}'
 
-@app.route('/detail-list')
-def detail_list():
-  name = request.args.get('name', 'world')
-  return f'Hello, {escape(name)}'
+@app.route('/detail/<dimension>')
+def detail(dimension):
+  return 'dimension %s' % escape(dimension)
 
-@app.route('/detail-item')
-def detail_item():
-  name = request.args.get('name', 'world')
-  return f'Hello, {escape(name)}'
+with app.test_request_context():
+    print(url_for('track'))
+    print(url_for('track', next='/'))
+    print(url_for('detail', dimension='list'))

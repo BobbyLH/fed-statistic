@@ -12,6 +12,7 @@ mysql-connector-python = "*"
 dash = "*"
 pandas = "*"
 flask = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
