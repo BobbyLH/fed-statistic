@@ -1,4 +1,5 @@
 import mysql.connector as mysql
+import sql
 
 try:
   conn = mysql.connect(
@@ -8,9 +9,13 @@ try:
     database = 'hp_fed_statistic'
   )
 except:
-  print(f'The database connect error')
+  print('The database connect error')
 else:
-  sql = 'INSERT INTO hupu_cli(project_type, project_name, stage, count) VALUES ("hybrid", "hp-spa", "init", 1)'
+  
+  sql = sql.sql_add_project(
+    project_type='spa-react',
+    project_name='hp-spa'
+  )
   cursor = conn.cursor(buffered=True)
 
   cursor.execute(sql)
