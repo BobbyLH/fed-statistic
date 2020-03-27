@@ -1,27 +1,23 @@
 import mysql.connector as mysql
-import sql
+import sqls
+from affair import affair
 
-try:
-  conn = mysql.connect(
-    host = 'localhost',
-    user = 'hupu',
-    passwd = 'hp-fed',
-    database = 'hp_fed_statistic'
-  )
-except:
-  print('The database connect error')
-else:
-  
-  sql = sql.sql_add_project(
-    project_type='spa-react',
-    project_name='hp-spa'
-  )
-  cursor = conn.cursor(buffered=True)
+def track(
+  project_name = 1,
+  project_type = 1,
+  project_id = 1,
+  project_stage = 1,
+  tool_name = 1,
+  tool_version = 1,
+  tool_id = 1
+):
+  def make_track(cursor):
+    sql = sqls.sql_find_tool(tool_id)
+    cursor.execute(sql)
+    print(cursor.stored_results())
+    for row in cursor:
+      print(row)
 
-  cursor.execute(sql)
-  conn.commit()
+  affair(make_track)
 
-
-
-
-
+track(tool_id = 2)
