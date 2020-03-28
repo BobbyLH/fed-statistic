@@ -14,12 +14,16 @@ def affair(fn):
       database = env['database']
     )
   except:
-    print('The database connect error')
+    print('The database connect error!')
   else:
     try:
       cursor = conn.cursor(dictionary=True)
       if fn and str(type(fn)) == "<class 'function'>":
-        fn(cursor)
+        try:
+          fn(cursor)
+        except:
+          print('The callback occured error!')
+          raise TypeError
       conn.commit()
       conn.close()
     except:

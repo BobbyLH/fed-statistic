@@ -5,13 +5,13 @@
 ```shell
 sudo apt-get install pipenv
 
+pipenv shell
+
 pipenv install
 ```
 
 ## 运行项目开发环境
 ```shell
-export FLASK_APP=main.py
-
 python -m flask run
 ```
 
