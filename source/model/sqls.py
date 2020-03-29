@@ -1,12 +1,12 @@
 import time
 
 # table-project-sql
-def sql_add_project(project_name, project_type):
+def sql_add_project(project_name, project_type, project_uuid):
   ts = int(time.time())
-  return str('INSERT INTO project(name, type, createAt) VALUES ("{}", "{}", {})').format(project_name, project_type, ts)
+  return str('INSERT INTO project(name, type, uuid, createAt) VALUES ("{}", "{}", "{}", {})').format(project_name, project_type, project_uuid, ts)
 
-def sql_find_project(project_id):
-  return 'SELECT * FROM project WHERE id=%d' % (project_id)
+def sql_find_project(project_uuid):
+  return 'SELECT * FROM project WHERE uuid="%s"' % (project_uuid)
 
 def sql_find_all_project():
   return 'SELECT * FROM project'
@@ -15,7 +15,10 @@ def sql_find_all_project():
 def sql_add_tool(tool_name, tool_version):
   return f'INSERT INTO tool(name, version) VALUES ("{tool_name}", "{tool_version}")'
 
-def sql_find_tool(tool_name, tool_version):
+def sql_find_tool(tool_name):
+  return 'SELECT * FROM tool WHERE name="%s"' % (tool_name)
+
+def sql_find_tool_version(tool_name, tool_version):
   return 'SELECT * FROM tool WHERE name="%s" AND version="%s"' % (tool_name, tool_version)
 
 def sql_find_all_tool():
@@ -29,8 +32,14 @@ def sql_add_log(project_id, tool_id, project_stage = None):
 
   return f'INSERT INTO log(project_id, project_stage, tool_id, count, createAt) VALUES ({project_id}, "{project_stage}", {tool_id}, 1, {ts})'
 
-def sql_find_log(project_id, tool_id):
-  return f'SELECT * FROM log WHERE project_id={project_id} AND tool_id={tool_id}'
+def sql_find_log_tool(*tool_ids):
+  condition_ids = ''
+  for tool_id in tool_ids:
+    condition_ids += f'tool_id={tool_id} OR'
+  return f'SELECT * FROM log WHERE {condition_ids}'
+
+def sql_find_log_tool_version(tool_id):
+  return f'SELECT * FROM log WHERE tool_id={tool_id}'
 
 def sql_update_log(log_id, count):
   if not log_id or not count:

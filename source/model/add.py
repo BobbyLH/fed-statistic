@@ -1,3 +1,4 @@
+from uuid import uuid4
 from affair import affair
 import sqls
 
@@ -8,8 +9,10 @@ def add_project(
   if not project_name:
     raise ValueError('Please pass correct project name!')
 
-  sql = sqls.sql_add_project(project_name, project_type)    
+  project_uuid = uuid4()
+  sql = sqls.sql_add_project(project_name, project_type, project_uuid)
   affair(lambda cursor: cursor.execute(sql))
+  return project_uuid
 
 def add_tool(
   tool_name = None,

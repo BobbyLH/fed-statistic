@@ -14,6 +14,7 @@ home(
   routes_pathname_prefix = '/'
 )
 uuid = 'f9958eac-ad8f-41d4-9647-b5c22a5b2ead'
+
 # track
 @app.route('/track', methods=['GET', 'POST'])
 def track():
@@ -23,6 +24,7 @@ def track():
   else:
     return f'Hello, {escape(name)}'
 
+# detial
 @app.route('/detail/<dimension>')
 def detail(dimension):
   return 'dimension %s' % escape(dimension)

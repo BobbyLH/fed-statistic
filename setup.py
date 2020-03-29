@@ -1,3 +1,32 @@
-import sys
+import mysql.connector as mysql
 
-sys.path.append('./source/')
+conn = mysql.connect(
+  host = 'localhost',
+  user = 'root',
+  passwd = ''
+)
+
+sql_create_database = 'CREATE DATABASE hp_fed_statistic'
+
+sql_create_user = 'CREATE USER hupu@localhost IDENTIFIED BY "hp-fed"'
+
+sql_grant_database = 'GRANT ALL ON hp_fed_statistic.* TO hupu@localhost'
+
+sql_use_database = 'USE hp_fed_statistic'
+
+sql_create_table_project = 'CREATE TABLE project (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, type VARCHAR(255), uuid VARCHAR(255) NOT NULL, createAt INT(11))'
+
+sql_create_table_tool = 'CREATE TABLE tool (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, version VARCHAR(255))'
+
+sql_create_table_log = 'CREATE TABLE log (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, project_id INT(11) NOT NULL, tool_id INT(11) NOT NULL, project_stage VARCHAR(255), count INT(11) NOT NULL, createAt INT(11))'
+
+cursor = conn.cursor(buffered=True)
+cursor.execute(sql_create_database)
+cursor.execute(sql_create_user)
+cursor.execute(sql_grant_database)
+cursor.execute(sql_use_database)
+cursor.execute(sql_create_table_project)
+cursor.execute(sql_create_table_tool)
+cursor.execute(sql_create_table_log)
+conn.commit()
+conn.close()

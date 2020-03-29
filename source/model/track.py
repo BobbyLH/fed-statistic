@@ -1,26 +1,29 @@
+import sys
+sys.path.append('./source/config')
+from ret import ret_list, make_res
 import mysql.connector as mysql
 import sqls
 from affair import affair
 
 def track(
-  project_id,
+  project_uuid,
   tool_name,
   tool_version,
   project_stage = None
 ):
-  res = {}
+  res = make_res()
+
   def make_track(cursor):
     # 校验项目是否注册
-    sql = sqls.sql_find_project(project_id)
+    sql = sqls.sql_find_project(project_uuid)
     cursor.execute(sql)
     info_project = cursor.fetchone()
     if not info_project:
-      res['ret'] = 40100
-      res['msg'] = '项目未注册'
-      return res
+      return make_res('项目未注册')
     else:
+      project_id = info_project['id']
       # 处理工具信息
-      sql = sqls.sql_find_tool(tool_name, tool_version)
+      sql = sqls.sql_find_tool_version(tool_name, tool_version)
       cursor.execute(sql)
       info_tool = cursor.fetchone()
       if not info_tool:
@@ -52,17 +55,12 @@ def track(
         cursor.execute(sql)
         isAffect = cursor.rowcount
 
-      # 输出结果
-      if isAffect:
-        res['msg'] = '成功'
-        res['ret'] = 0
-      else:
-        res['msg'] = '未能成功入库，请重试'
-        res['ret'] = 40101
+      if not isAffect:
+        return make_res('未能成功入库，请重试')     
 
-  affair(make_track)
+  res = affair(make_track)
   return res
 
 if __name__ == '__main__':
-  res = track(project_id = 3, tool_name = 'hupu-cli', tool_version = '0.0.51')
+  res = track(project_uuid = 'd8d78aea-3177-4ffc-9568-b3b781274a24', tool_name = 'hupu-cli', tool_version = '0.0.51')
   print(res)
