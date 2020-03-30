@@ -1,6 +1,6 @@
 import sys
 sys.path.append('./source/utils')
-from ret import ret_list, make_res
+from ret import make_res
 import mysql.connector as mysql
 import sqls
 from affair import affair
@@ -35,7 +35,7 @@ def track(
       if not isAffect:
         return make_res('未能成功入库，请重试')
 
-      return make_res()   
+      return make_res() 
 
   return affair(make_track)
 

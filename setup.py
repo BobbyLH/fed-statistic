@@ -12,7 +12,6 @@ for param in params_cli:
   param = param.split('=')
   mysql_configs[param[0]] = param[1]
 
-print(mysql_configs)
 conn = mysql.connect(
   host = mysql_configs['host'],
   user = mysql_configs['user'],

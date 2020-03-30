@@ -8,11 +8,13 @@ def add_project(
 ):
   if not project_name:
     raise ValueError('Please pass correct project name!')
-
-  project_uuid = uuid4()
-  sql = sqls.sql_add_project(project_name, project_type, project_uuid)
-  affair(lambda cursor: cursor.execute(sql))
-  return project_uuid
+  
+  def add(cursor):
+    project_uuid = uuid4()
+    sql = sqls.sql_add_project(project_name, project_type, project_uuid)
+    cursor.execute(sql)
+    return project_uuid
+  return affair(add)
 
 def add_tool(
   tool_name,
@@ -60,7 +62,7 @@ def add_log(
       )
       cursor.execute(sql)
       isAffect = cursor.rowcount
-    return isAffect
+    return bool(isAffect)
 
   return affair(add)
 
