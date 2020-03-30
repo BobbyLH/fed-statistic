@@ -2,10 +2,14 @@ import time
 
 # table-project-sql
 def sql_add_project(project_name, project_type, project_uuid):
+  if not project_name or not project_type or not project_uuid:
+    raise ValueError('lack critical parameters')
   ts = int(time.time())
   return str('INSERT INTO project(name, type, uuid, createAt) VALUES ("{}", "{}", "{}", {})').format(project_name, project_type, project_uuid, ts)
 
 def sql_find_project(project_uuid):
+  if not project_uuid:
+    raise ValueError('lack critical parameters')
   return 'SELECT * FROM project WHERE uuid="%s"' % (project_uuid)
 
 def sql_find_all_project():
@@ -13,9 +17,14 @@ def sql_find_all_project():
 
 # table-tool-sql
 def sql_add_tool(tool_name, tool_version):
-  return f'INSERT INTO tool(name, version) VALUES ("{tool_name}", "{tool_version}")'
+  if not tool_name or not tool_version:
+    raise ValueError('lack critical parameters')
+  ts = int(time.time())
+  return f'INSERT INTO tool(name, version, createAt) VALUES ("{tool_name}", "{tool_version}", {ts})'
 
 def sql_find_tool(tool_name):
+  if not tool_name:
+    raise ValueError('lack critical parameters')
   return 'SELECT * FROM tool WHERE name="%s"' % (tool_name)
 
 def sql_find_tool_version(tool_name, tool_version):
@@ -26,20 +35,32 @@ def sql_find_all_tool():
 
 # table-log-sql
 def sql_add_log(project_id, tool_id, project_stage = None):
-  ts = int(time.time())
   if not project_stage:
-    return f'INSERT INTO log(project_id, tool_id, count, createAt) VALUES ({project_id}, {tool_id}, 1, {ts})'
+    return f'INSERT INTO log(project_id, tool_id, count) VALUES ({project_id}, {tool_id}, 1)'
 
-  return f'INSERT INTO log(project_id, project_stage, tool_id, count, createAt) VALUES ({project_id}, "{project_stage}", {tool_id}, 1, {ts})'
+  return f'INSERT INTO log(project_id, project_stage, tool_id, count) VALUES ({project_id}, "{project_stage}", {tool_id}, 1)'
 
-def sql_find_log_tool(*tool_ids):
+def sql_find_log_tool(tool_ids):
+  if not tool_ids or len(tool_ids) == 0:
+    raise ValueError('lack critical parameters')
   condition_ids = ''
-  for tool_id in tool_ids:
-    condition_ids += f'tool_id={tool_id} OR'
+  for i in range(len(tool_ids)):
+    tool_id = tool_ids[i]
+    condition_str = f'tool_id={tool_id} OR '
+    if i == len(tool_ids) - 1:
+      condition_str = f'tool_id={tool_id}'
+    condition_ids += condition_str
   return f'SELECT * FROM log WHERE {condition_ids}'
 
 def sql_find_log_tool_version(tool_id):
+  if not tool_id:
+    raise ValueError('lack critical parameters')
   return f'SELECT * FROM log WHERE tool_id={tool_id}'
+
+def sql_find_log_one(tool_id, project_id):
+  if not tool_id or not project_id:
+    raise ValueError('lack critical parameters')
+  return f'SELECT * FROM log WHERE tool_id={tool_id} AND project_id={project_id}'
 
 def sql_update_log(log_id, count):
   if not log_id or not count:
