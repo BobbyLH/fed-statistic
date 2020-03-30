@@ -15,8 +15,8 @@ def add_project(
   return project_uuid
 
 def add_tool(
-  tool_name = None,
-  tool_version = None
+  tool_name,
+  tool_version
 ):
   if not tool_name or not tool_version:
     raise ValueError('Please pass correct parameters!')

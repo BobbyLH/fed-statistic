@@ -1,5 +1,5 @@
 import sys
-sys.path.append('./source/config')
+sys.path.append('./source/utils')
 from ret import ret_list, make_res
 from affair import affair
 import sqls

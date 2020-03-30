@@ -13,11 +13,21 @@ home(
   server = app,
   routes_pathname_prefix = '/'
 )
-uuid = 'f9958eac-ad8f-41d4-9647-b5c22a5b2ead'
+
+publickey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKKqFcEpUwEJEJj1b434F5NkGRhKGMHCgeOl0L+RMNf4G6w2JLa8v6HXJZRdSA/sr5NGrHg9jXyudl+LoDKM1rHP90S8/S9ZW7eg5q6Upp5PcAGMDeQwFarlKMFwphvmJKHmGgDXrliLDk0nsVw6duVl/RGJPkL/KQ29bEHrkxIwIDAQAB'
+
+# add
+@app.route('/add/<type>', methods=['POST'])
+def fn_add():
+  name = request.args.get('name', 'world')
+  if request.method == 'POST':
+    return '{} Hello'.format(escape(name))
+  else:
+    return f'Hello, {escape(name)}'
 
 # track
-@app.route('/track', methods=['GET', 'POST'])
-def track():
+@app.route('/track', methods=['POST'])
+def fn_track():
   name = request.args.get('name', 'world')
   if request.method == 'POST':
     return '{} Hello'.format(escape(name))
@@ -25,8 +35,8 @@ def track():
     return f'Hello, {escape(name)}'
 
 # detial
-@app.route('/detail/<dimension>')
-def detail(dimension):
+@app.route('/detail/<dimension>', methods=['GET'])
+def fn_detail(dimension):
   return 'dimension %s' % escape(dimension)
 
 with app.test_request_context():
