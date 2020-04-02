@@ -7,6 +7,11 @@ def sql_add_project(project_name, project_type, project_uuid):
   ts = int(time.time())
   return str('INSERT INTO project(name, type, uuid, createAt) VALUES ("{}", "{}", "{}", {})').format(project_name, project_type, project_uuid, ts)
 
+def sql_find_project_unsafe(project_name):
+  if not project_name:
+    raise ValueError('lack critical parameters')
+  return 'SELECT * FROM project WHERE name="%s"' % (project_name)
+
 def sql_find_project(project_uuid):
   if not project_uuid:
     raise ValueError('lack critical parameters')

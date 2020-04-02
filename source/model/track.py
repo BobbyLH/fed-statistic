@@ -39,6 +39,11 @@ def track(
 
   return affair(make_track)
 
+def unsafe_get_project_uuid(project_name):
+  def get_project(cursor):
+    sql = sqls.sql_find_project_unsafe(project_name)
+    info_project = cursor.fetchone()
+
 if __name__ == '__main__':
   res = track(project_uuid = '9419c3c3-79e3-41a0-a924-f0f8314a66fc', tool_name = 'hupu-cli', tool_version = '0.0.4')
   print(res)
