@@ -3,7 +3,7 @@ sys.path.append('./source')
 from model.detail import get_detail_tool
 from utils.ret import make_res
 
-def detail(
+def controller_detail(
   tool_name,
   tool_version = None
 ):

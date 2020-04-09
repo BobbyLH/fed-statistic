@@ -18,7 +18,7 @@ publickey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKKqFcEpUwEJEJj1b434F5NkGRhKG
 
 # add
 @app.route('/add/<type>', methods=['POST'])
-def fn_add():
+def add():
   name = request.args.get('name', 'world')
   if request.method == 'POST':
     return '{} Hello'.format(escape(name))
@@ -27,7 +27,7 @@ def fn_add():
 
 # track
 @app.route('/track', methods=['POST'])
-def fn_track():
+def track():
   name = request.args.get('name', 'world')
   if request.method == 'POST':
     return '{} Hello'.format(escape(name))
@@ -36,7 +36,7 @@ def fn_track():
 
 # detial
 @app.route('/detail/<dimension>', methods=['GET'])
-def fn_detail(dimension):
+def detail(dimension):
   return 'dimension %s' % escape(dimension)
 
 with app.test_request_context():

@@ -3,7 +3,7 @@ sys.path.append('./source')
 from model.add import add_project, add_tool
 from utils.ret import make_res
 
-def add(
+def controller_add(
   type,
   project_name,
   project_type = None,
