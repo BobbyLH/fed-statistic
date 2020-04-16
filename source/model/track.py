@@ -8,7 +8,7 @@ def track(
   tool_version,
   project_name = None,
   project_uuid = None,
-  project_stage = None
+  info = None
 ):
   def make_track(cursor):
     # 校验项目是否注册
@@ -33,7 +33,7 @@ def track(
       return add_log(
         project_id,
         tool_id,
-        project_stage
+        info
       )
 
   return affair(make_track)

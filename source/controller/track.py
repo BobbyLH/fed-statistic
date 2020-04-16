@@ -8,14 +8,14 @@ def controller_track(
   tool_version,
   project_name = None,
   project_uuid = None,
-  project_stage = None
+  info = None
 ):
   result = track(
     tool_name,
     tool_version,
     project_name,
     project_uuid,
-    project_stage
+    info
   )
   if result == '项目未注册':
     return make_res(result)

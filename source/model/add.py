@@ -39,7 +39,7 @@ def add_tool(
 def add_log(
   project_id,
   tool_id,
-  project_stage = None,
+  info = None,
 ):
   if not project_id or not tool_id:
     raise ValueError('Please pass correct parameters!')
@@ -58,7 +58,7 @@ def add_log(
       sql = sqls.sql_add_log(
         project_id = project_id,
         tool_id = tool_id,
-        project_stage = project_stage
+        info = info
       )
       cursor.execute(sql)
       isAffect = cursor.rowcount

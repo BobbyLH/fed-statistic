@@ -39,13 +39,10 @@ def sql_find_all_tool():
   return 'SELECT * FROM tool'
 
 # table-log-sql
-def sql_add_log(project_id, tool_id, project_stage = None):
-  if not project_stage:
-    return f'INSERT INTO log(project_id, tool_id, count) VALUES ({project_id}, {tool_id}, 1)'
+def sql_add_log(project_id, tool_id, info = None):
+  return f'INSERT INTO log(project_id, tool_id, info) VALUES ({project_id}, {tool_id}, {info})'
 
-  return f'INSERT INTO log(project_id, project_stage, tool_id, count) VALUES ({project_id}, "{project_stage}", {tool_id}, 1)'
-
-def sql_find_log_tool(tool_ids):
+def sql_find_log_tools(tool_ids):
   if not tool_ids or len(tool_ids) == 0:
     raise ValueError('lack critical parameters')
   condition_ids = ''
@@ -57,7 +54,7 @@ def sql_find_log_tool(tool_ids):
     condition_ids += condition_str
   return f'SELECT * FROM log WHERE {condition_ids}'
 
-def sql_find_log_tool_version(tool_id):
+def sql_find_log_tool(tool_id):
   if not tool_id:
     raise ValueError('lack critical parameters')
   return f'SELECT * FROM log WHERE tool_id={tool_id}'
@@ -67,7 +64,7 @@ def sql_find_log_one(tool_id, project_id):
     raise ValueError('lack critical parameters')
   return f'SELECT * FROM log WHERE tool_id={tool_id} AND project_id={project_id}'
 
-def sql_update_log(log_id, count):
-  if not log_id or not count:
+def sql_update_log(log_id, info):
+  if not log_id or not info:
     raise ValueError('lack critical parameters')
-  return f'UPDATE log SET count={count} WHERE id={log_id}'
+  return f'UPDATE log SET info={info} WHERE id={log_id}'

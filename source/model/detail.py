@@ -12,7 +12,7 @@ def get_detail_tool(
       cursor.execute(sql)
       info_tool = cursor.fetchone()
       if info_tool:
-        sql = sqls.sql_find_log_tool_version(info_tool['id'])
+        sql = sqls.sql_find_log_tool(info_tool['id'])
         cursor.execute(sql)
         return cursor.fetchall()
     else:
@@ -23,7 +23,7 @@ def get_detail_tool(
         tool_ids = list()
         for info_tool in info_tools:
           tool_ids.append(info_tool['id'])
-        sql = sqls.sql_find_log_tool(tool_ids)
+        sql = sqls.sql_find_log_tools(tool_ids)
         cursor.execute(sql)
         return cursor.fetchall()
 
