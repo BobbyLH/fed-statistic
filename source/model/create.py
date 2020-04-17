@@ -53,10 +53,10 @@ def create_log(
 
   def make_log(cursor):
     sql = sql_add_log(
-        project_id = project_id,
-        tool_id = tool_id,
-        info = info
-      )
+      project_id = project_id,
+      tool_id = tool_id,
+      info = info
+    )
     cursor.execute(sql)
     isAffect = cursor.rowcount
     return bool(isAffect)

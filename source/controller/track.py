@@ -36,11 +36,10 @@ if __name__ == '__main__':
     'monitor': False
   }
   info_json = json.dumps(info)
-  print(info_json)
   res = track(
     tool_name = 'hupu-cli',
-    tool_version = '0.0.39',
-    project_name = 'hp-project-393',
+    tool_version = '0.0.15',
+    project_name = 'hp-project-708',
     info = info_json
   )
   print(res)

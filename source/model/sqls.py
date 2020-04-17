@@ -42,7 +42,7 @@ def sql_find_all_tool():
 def sql_add_log(project_id, tool_id, info = None):
   if not info:
     return f'INSERT INTO log (project_id, tool_id) VALUES ({project_id}, {tool_id})'
-  return f'INSERT INTO log (project_id, tool_id, info) VALUES ({project_id}, {tool_id}, {info})'
+  return f'INSERT INTO log (project_id, tool_id, info) VALUES ({project_id}, {tool_id}, \'{info}\')'
 
 def sql_find_log_tools(tool_ids):
   if not tool_ids or len(tool_ids) == 0:
