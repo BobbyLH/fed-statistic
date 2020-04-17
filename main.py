@@ -3,6 +3,9 @@ from markupsafe import escape
 import sys
 sys.path.append('./source/')
 from view.home import home
+import controller.add as c_add
+import controller.detail as c_detail
+import controller.track as c_track
 
 app_name = 'hp-fed-statistic'
 app = Flask(app_name)
