@@ -29,7 +29,7 @@ def create_tool(
 ):
   if not tool_name or not tool_version:
     raise ValueError('Please pass correct parameters!')
-  def add(cursor):
+  def make_tool(cursor):
     sql = sql_find_tool_version(tool_name, tool_version)
     cursor.execute(sql)
     info_tool = cursor.fetchone()
@@ -41,7 +41,7 @@ def create_tool(
       tool_id = info_tool['id']
     return tool_id
 
-  return routine(add)
+  return routine(make_tool)
 
 def create_log(
   project_id,
@@ -51,27 +51,17 @@ def create_log(
   if not project_id or not tool_id:
     raise ValueError('Please pass correct parameters!')
 
-  def add(cursor):
-    sql = sql_find_log_one(tool_id, project_id)
-    cursor.execute(sql)
-    info_log = cursor.fetchone()
-    if info_log:
-      log_id = info_log['id']
-      count = info_log['count']
-      sql = sql_update_log(log_id, count + 1)
-      cursor.execute(sql)
-      isAffect = cursor.rowcount
-    else:
-      sql = sql_add_log(
+  def make_log(cursor):
+    sql = sql_add_log(
         project_id = project_id,
         tool_id = tool_id,
         info = info
       )
-      cursor.execute(sql)
-      isAffect = cursor.rowcount
+    cursor.execute(sql)
+    isAffect = cursor.rowcount
     return bool(isAffect)
 
-  return routine(add)
+  return routine(make_log)
 
 def create_track(
   tool_name,
@@ -107,10 +97,3 @@ def create_track(
       )
 
   return routine(make_track)
-
-if __name__ == '__main__':
-  from random import randrange
-  project_uuid = create_project(project_name = f'hp-project-{randrange(1, 1000)}', project_type = 'hybrid')
-  print(project_uuid)
-  tool_id = create_tool(tool_name = f'hupu-cli', tool_version = f'0.0.{randrange(1, 100)}')
-  print(tool_id)

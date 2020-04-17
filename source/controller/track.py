@@ -35,10 +35,12 @@ if __name__ == '__main__':
     'commitlint': False,
     'monitor': False
   }
-  info = json.dumps(info)
-  track(
-    'hupu-cli',
-    '0.0.39',
-    'hp-project-393',
-    info = info
+  info_json = json.dumps(info)
+  print(info_json)
+  res = track(
+    tool_name = 'hupu-cli',
+    tool_version = '0.0.39',
+    project_name = 'hp-project-393',
+    info = info_json
   )
+  print(res)

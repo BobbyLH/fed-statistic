@@ -1,5 +1,9 @@
 from routine import routine
-from sqls import sql_find_tool_version, sql_find_log_tool, sql_find_tool, sql_find_log_tools
+from sqls import (sql_find_tool_version, 
+sql_find_log_tool, 
+sql_find_tool,
+sql_find_log_tools
+)
 
 def read_tool(
   name,
@@ -28,7 +32,3 @@ def read_tool(
         return cursor.fetchall()
 
   return routine(get_detail_tool)
-
-if __name__ == '__main__':
-  res = read_tool(name = 'hupu-cli')
-  print(res)

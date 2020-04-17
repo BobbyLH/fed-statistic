@@ -1,7 +1,8 @@
 import sys
-sys.path.append('./source')
-from model.read import read_tool
-from utils.ret import make_res
+sys.path.append('./source/model')
+sys.path.append('./source/utils')
+from read import read_tool
+from ret import make_res
 
 def detail(
   tool_name,
@@ -12,3 +13,10 @@ def detail(
     return make_res('成功', info_tools)
   else:
     return make_res('未找到工具信息')
+
+if __name__ == '__main__':
+  res = detail(
+    tool_name = 'hupu-cli',
+    tool_version = '0.0.39'
+  )
+  print(res)
