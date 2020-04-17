@@ -1,6 +1,6 @@
 import sys
-sys.path.append('./source')
-from model.create import create_project, create_tool
+sys.path.append('./source/model')
+from create import create_project, create_tool
 from utils.ret import make_res
 
 def add(

@@ -1,5 +1,5 @@
 from uuid import uuid4
-from affair import affair
+from routine import routine
 from sqls import (sql_add_project,
 sql_add_tool,
 sql_add_log,
@@ -21,7 +21,7 @@ def create_project(
     sql = sql_add_project(project_name, project_type, project_uuid)
     cursor.execute(sql)
     return project_uuid
-  return affair(add)
+  return routine(add)
 
 def create_tool(
   tool_name,
@@ -41,7 +41,7 @@ def create_tool(
       tool_id = info_tool['id']
     return tool_id
 
-  return affair(add)
+  return routine(add)
 
 def create_log(
   project_id,
@@ -71,7 +71,7 @@ def create_log(
       isAffect = cursor.rowcount
     return bool(isAffect)
 
-  return affair(add)
+  return routine(add)
 
 def create_track(
   tool_name,
@@ -106,7 +106,7 @@ def create_track(
         info
       )
 
-  return affair(make_track)
+  return routine(make_track)
 
 if __name__ == '__main__':
   from random import randrange

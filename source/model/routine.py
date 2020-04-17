@@ -5,7 +5,7 @@ from database import dev, prod
 
 env = dev
 
-def affair(fn):
+def routine(fn):
   try:
     conn = mysql.connect(
       host = env['host'],
@@ -22,8 +22,12 @@ def affair(fn):
       if fn and str(type(fn)) == "<class 'function'>":
         try:
           res = fn(cursor)
+        except OSError as e:
+          print('System error: ', str(e))
+        except ValueError as e:
+          print('Value error: ', str(e))
         except:
-          print('The callback occured error!')
+          print('The callback occured error: ', str(sys.exc_info()[0]))
           raise TypeError
       conn.commit()
       conn.close()

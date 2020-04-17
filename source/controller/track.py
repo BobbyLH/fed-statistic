@@ -1,8 +1,9 @@
 import sys
 import json
-sys.path.append('./source')
-from model.create import create_track
-from utils.ret import make_res
+sys.path.append('./source/model')
+sys.path.append('./source/utils')
+from create import create_track
+from ret import make_res
 
 def track(
   tool_name,
@@ -35,10 +36,9 @@ if __name__ == '__main__':
     'monitor': False
   }
   info = json.dumps(info)
-  print(info)
-  # track(
-  #   'hupu-cli',
-  #   '0.0.39',
-  #   'hp-project-393',
-  #   ''
-  # )
+  track(
+    'hupu-cli',
+    '0.0.39',
+    'hp-project-393',
+    info = info
+  )
