@@ -9,8 +9,23 @@ def read_tool(
   name,
   version = None
 ):
-  def get_detail_tool(cursor):
+  def get_tool(cursor):
+    if version:
+      sql = sql_find_tool_version(name, version)
+      cursor.execute(sql)
+      return cursor.fetchone()
+    else:
+      sql = sql_find_tool(name)
+      cursor.execute(sql)
+      return cursor.fetchall()
 
+  return routine(get_tool)
+
+def read_log_tool(
+  name,
+  version = None
+):
+  def get_log_tool(cursor):
     if version:
       sql = sql_find_tool_version(name, version)
       cursor.execute(sql)
@@ -31,4 +46,4 @@ def read_tool(
         cursor.execute(sql)
         return cursor.fetchall()
 
-  return routine(get_detail_tool)
+  return routine(get_log_tool)

@@ -4,7 +4,7 @@ import time
 def sql_add_project(project_name, project_type, project_uuid):
   if not project_name or not project_type or not project_uuid:
     raise ValueError('lack critical parameters')
-  ts = int(time.time())
+  ts = int(time.time() * 1000)
   return str('INSERT INTO project(name, type, uuid, createAt) VALUES ("{}", "{}", "{}", {})').format(project_name, project_type, project_uuid, ts)
 
 def sql_find_project_unsafe(project_name):
@@ -24,7 +24,7 @@ def sql_find_all_project():
 def sql_add_tool(tool_name, tool_version):
   if not tool_name or not tool_version:
     raise ValueError('lack critical parameters')
-  ts = int(time.time())
+  ts = int(time.time() * 1000)
   return f'INSERT INTO tool(name, version, createAt) VALUES ("{tool_name}", "{tool_version}", {ts})'
 
 def sql_find_tool(tool_name):

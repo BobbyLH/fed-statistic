@@ -38,8 +38,8 @@ if __name__ == '__main__':
   info_json = json.dumps(info)
   res = track(
     tool_name = 'hupu-cli',
-    tool_version = '0.0.15',
-    project_name = 'hp-project-708',
+    tool_version = '0.0.21',
+    project_name = 'hp-project-44',
     info = info_json
   )
   print(res)
