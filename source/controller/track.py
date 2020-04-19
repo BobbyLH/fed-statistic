@@ -28,7 +28,7 @@ def track(
 
 if __name__ == '__main__':
   info = {
-    'stage': 'init',
+    'stage': 'dev',
     'typescript': True,
     'eslint': True,
     'stylelint': True,

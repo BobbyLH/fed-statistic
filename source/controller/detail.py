@@ -25,7 +25,7 @@ def detail_tool(
     return make_res('未找到工具信息')
 
 if __name__ == '__main__':
-  res = detail_tool(
+  res = detail_log(
     tool_name = 'hupu-cli'
   )
   print(res)
