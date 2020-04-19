@@ -28,7 +28,7 @@ def track(
 
 if __name__ == '__main__':
   info = {
-    'stage': 'dev',
+    'stage': 'build',
     'typescript': True,
     'eslint': True,
     'stylelint': True,
@@ -39,7 +39,7 @@ if __name__ == '__main__':
   res = track(
     tool_name = 'hupu-cli',
     tool_version = '0.0.21',
-    project_name = 'hp-project-44',
+    project_name = 'hp-project-834',
     info = info_json
   )
   print(res)

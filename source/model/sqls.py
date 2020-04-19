@@ -12,10 +12,15 @@ def sql_find_project_unsafe(project_name):
     raise ValueError('lack critical parameters')
   return 'SELECT * FROM project WHERE name="%s"' % (project_name)
 
-def sql_find_project(project_uuid):
-  if not project_uuid:
+def sql_find_project(
+  project_uuid = None,
+  project_id = None
+):
+  if not project_uuid and not project_id:
     raise ValueError('lack critical parameters')
-  return 'SELECT * FROM project WHERE uuid="%s"' % (project_uuid)
+  if project_uuid:
+    return 'SELECT * FROM project WHERE uuid="%s"' % (project_uuid)
+  return 'SELECT * FROM project WHERE id="%s"' % (project_id)
 
 def sql_find_all_project():
   return 'SELECT * FROM project'

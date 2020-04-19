@@ -2,7 +2,8 @@ from routine import routine
 from sqls import (sql_find_tool_version, 
 sql_find_log_tool, 
 sql_find_tool,
-sql_find_log_tools
+sql_find_log_tools,
+sql_find_project
 )
 
 def read_tool(
@@ -20,6 +21,20 @@ def read_tool(
       return cursor.fetchall()
 
   return routine(get_tool)
+
+def read_project(
+  project_uuid = None,
+  project_id = None
+):
+  def get_project(cursor):
+    sql = sql_find_project(
+      project_uuid = project_uuid,
+      project_id = project_id
+    )
+    cursor.execute(sql)
+    return cursor.fetchone()
+
+  return routine(get_project)
 
 def read_log_tool(
   name,
