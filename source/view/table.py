@@ -28,7 +28,6 @@ def table(
 ):
   app = dash.Dash(
     name,
-    external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'],
     server=server,
     routes_pathname_prefix=routes_pathname_prefix
   )

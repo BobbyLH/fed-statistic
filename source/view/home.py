@@ -5,11 +5,9 @@ import dash_html_components as html
 
 def home(name = __name__, server = True, routes_pathname_prefix = '/'):
 
-	external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 	app = dash.Dash(
 		name,
-		external_stylesheets=external_stylesheets,
 		server=server,
 		routes_pathname_prefix=routes_pathname_prefix
 	)
@@ -25,20 +23,63 @@ def home(name = __name__, server = True, routes_pathname_prefix = '/'):
 		},
 		children=[
 			html.H1(
-				children='虎扑前端工具数据分析',
+				children='虎扑前端CLI脚手架数据分析',
 				style={
 					'textAlign': 'center',
 					'color': colors['text']
 				}
 			),
 
-			html.Div(
+			html.A(
 				children='''
-					Dash: A web application framework for Python.
+					GitLab 地址
 				''',
+				href='http://gitlab.hupu.com/foundation-frontend/hupu-cli',
+				target='_blank',
 				style={
+					'display': 'block',
 					'textAlign': 'center',
-					'color': colors['text']
+					'color': 'gold',
+					'fontSize': '16px',
+					'margin': '20px auto'
+				}
+			),
+
+			html.Ul(
+				children=[
+					html.Li(
+						html.A(
+							children='hupu-cli 版本列表',
+							href='/list/hupu-cli',
+							style={
+								'color': 'white'
+							}
+						)
+					),
+					html.Li(
+						html.A(
+							children='hupu-cli 使用情况',
+							href='/detail/hupu-cli',
+							style={
+								'color': 'white'
+							}
+						)
+					),
+					html.Li(
+						html.A(
+							children='hupu-cli 接入项目',
+							href='/list/project',
+							style={
+								'color': 'white'
+							}
+						)
+					)
+				],
+				style={
+					'listStyleType': 'cjk-ideographic',
+					'textAlign': 'center',
+					'fontSize': '20px',
+					'color': 'white'
 				}
 			),
 
@@ -51,7 +92,7 @@ def home(name = __name__, server = True, routes_pathname_prefix = '/'):
 								'type': 'bar', 'name': u'Montréal'},
 					],
 					'layout': {
-						'title': 'Dash Data Visualization',
+						'title': 'Powered by Dash And Flask',
 						'plot_bgcolor': colors['background'],
 						'paper_bgcolor': colors['background'],
 						'font': {

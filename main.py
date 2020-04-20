@@ -61,11 +61,13 @@ def generate_df_detail(tool_name):
     col = ['init', 'dev', 'new', 'build', 'release', 'total']
     row = [0, 0, 0, 0, 0, total]
     for item in data:
-      info = json.loads(item['info'])
-      stage = info['stage']
-      ind = col.index(stage)
-      origin = row[ind]
-      row[ind] = origin + 1
+      info = item['info']
+      if info:
+        info = json.loads(item['info'])
+        stage = info['stage']
+        ind = col.index(stage)
+        origin = row[ind]
+        row[ind] = origin + 1
     return pd.DataFrame(np.array([row]), columns=col)
   return None
 
