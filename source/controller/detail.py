@@ -35,7 +35,7 @@ def detail_project(
       project_id = item['project_id']
       if len(info_projects) > 0:
         for ind, info in enumerate(info_projects):
-          if info['id'] == project_id:
+          if info and info['id'] == project_id:
             break
           if ind + 1 == len(info_projects):
             info_projects.append(read_project(project_id = project_id))
