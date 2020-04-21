@@ -142,5 +142,4 @@ def run_app():
     data = json.loads(request.data)
     return do_response(json.dumps(c_track.track(**data), ensure_ascii = False))
 
-if __name__ == '__main__':
-  run_app()
+run_app()
