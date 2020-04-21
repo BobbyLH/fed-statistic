@@ -28,15 +28,8 @@ def table(
   routes_pathname_prefix = '/table/'
 ):
   def serve_layout():
-    default_DOM = html.Div([
-      dcc.Location(id='url', refresh=False),
-      html.Div(id='page-content')
-    ])
-
     if has_request_context() and request.method == 'GET':
       dataframe = get_data()
-      if not dataframe.bool or dataframe.empty:
-        return default_DOM
       return html.Div(children=[
         html.H4(children=title),
         generate_table(dataframe, max_rows)
@@ -47,7 +40,10 @@ def table(
         'max-height': '70vh',
         'overflow': 'auto'
       })
-    return default_DOM
+    return html.Div([
+      dcc.Location(id='url', refresh=False),
+      html.Div(id='page-content')
+    ])
 
   app = dash.Dash(
     name,
