@@ -35,7 +35,7 @@ def table(
 
     if has_request_context() and request.method == 'GET':
       dataframe = get_data()
-      if not dataframe:
+      if dataframe.empty():
         return default_DOM
       return html.Div(children=[
         html.H4(children=title),
