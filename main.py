@@ -1,4 +1,4 @@
-from flask import Flask, escape, request, url_for, redirect
+from flask import Flask, escape, request, url_for, redirect, Response
 from markupsafe import escape
 import sys
 import json
@@ -8,6 +8,7 @@ from view.table import table
 import controller.add as c_add
 import controller.detail as c_detail
 import controller.track as c_track
+from utils.ret import make_res
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -45,7 +46,7 @@ def generate_df_list(tool_name):
   return None
 
 table(
-  dataframe = generate_df_list('hupu-cli'),
+  get_data = lambda : generate_df_list('hupu-cli'),
   name = app_name,
   server = server,
   title=f'虎扑前端 hupu-cli 版本列表',
@@ -72,7 +73,7 @@ def generate_df_detail(tool_name):
   return None
 
 table(
-  dataframe = generate_df_detail('hupu-cli'),
+  get_data = lambda : generate_df_detail('hupu-cli'),
   name = app_name,
   server = server,
   title=f'虎扑前端 hupu-cli 使用详情',
@@ -102,27 +103,40 @@ def generate_df_list_project(tool_name):
   return None
 
 table(
-  dataframe = generate_df_list_project('hupu-cli'),
+  get_data = lambda : generate_df_list_project('hupu-cli'),
   name = app_name,
   server = server,
   title=f'hupu-cli 应用项目列表',
   routes_pathname_prefix = '/list/project/'
 )
 
+def do_response (data):
+  if type(data) == "<class 'str'>":
+    return Response(json.dumps(make_res(data), ensure_ascii = False), content_type='application/json; charset=utf-8')
+  return Response(data, content_type='application/json; charset=utf-8')
+
 # add
 @server.route('/add', methods=['POST'])
 def add():
-  name = request.args.get('name', 'world')
-  if request.method == 'POST':
-    return '{} Hello'.format(escape(name))
-  else:
-    return f'Hello, {escape(name)}'
+  if request.method != 'POST':
+    return do_response('请求方法不匹配')
+
+  content_type = request.content_type
+  if not content_type == 'application/json':
+    return do_response('请传入正确的数据格式')
+
+  data = json.loads(request.data)
+  return do_response(json.dumps(c_add.add(**data), ensure_ascii = False))
 
 # track
 @server.route('/track', methods=['POST'])
 def track():
-  name = request.args.get('name', 'world')
-  if request.method == 'POST':
-    return '{} Hello'.format(escape(name))
-  else:
-    return f'Hello, {escape(name)}'
+  if request.method != 'POST':
+    return do_response('请求方法不匹配')
+
+  content_type = request.content_type
+  if not content_type == 'application/json':
+    return do_response('请传入正确的数据格式')
+
+  data = json.loads(request.data)
+  return do_response(json.dumps(c_track.track(**data), ensure_ascii = False))

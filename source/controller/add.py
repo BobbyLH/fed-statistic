@@ -6,17 +6,32 @@ from ret import make_res
 
 def add(
   type,
-  project_name = None,
-  project_type = None,
-  tool_name = None,
-  tool_version = None
+  **kwargs
 ):
   if type == 'project':
-    uuid = create_project(project_name, project_type)
-    return make_res('成功', { 'id': uuid })
+    project_name = kwargs['project_name']
+    project_type = kwargs['project_type']
+    try:
+      uuid = create_project(project_name, project_type)
+
+      if not uuid:
+        return make_res('未能成功入库，请重试')
+
+      return make_res('成功', { 'id': uuid })
+    except ValueError as e:
+      return make_res(e)
   elif type == 'tool':
-    tool_id = create_tool(tool_name, tool_version)
-    return make_res('成功', { 'id': tool_id })
+    tool_name = kwargs['tool_name']
+    tool_version = kwargs['tool_version']
+    try:
+      tool_id = create_tool(tool_name, tool_version)
+
+      if not tool_id:
+        return make_res('未能成功入库，请重试')
+
+      return make_res('成功', { 'id': tool_id })
+    except ValueError as e:
+      return make_res(e)
   elif type == 'log':
     return make_res('不允许直接添加日志信息')
   else:
@@ -24,15 +39,21 @@ def add(
 
 if __name__ == '__main__':
   from random import randrange
+  data1 = {
+    'project_name': f'hp-project-{randrange(1, 1000)}',
+    'project_type': 'hybrid'
+  }
   res1 = add(
     type='project',
-    project_name = f'hp-project-{randrange(1, 1000)}',
-    project_type = 'hybrid'
+    **data1
   )
   print(res1)
+  data2 = {
+    'tool_name': f'hupu-cli',
+    'tool_version': f'0.0.{randrange(1, 100)}'
+  }
   res2 = add(
     type='tool',
-    tool_name = f'hupu-cli',
-    tool_version = f'0.0.{randrange(1, 100)}'
+    **data2
   )
   print(res2)

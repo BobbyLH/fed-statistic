@@ -26,11 +26,11 @@ sql_grant_database = 'GRANT ALL ON hp_fed_statistic.* TO hupu@localhost'
 
 sql_use_database = 'USE hp_fed_statistic'
 
-sql_create_table_project = 'CREATE TABLE project (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, type VARCHAR(255), uuid VARCHAR(255) NOT NULL, createAt INT(11) NOT NULL)'
+sql_create_table_project = 'CREATE TABLE project (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, type VARCHAR(255), uuid VARCHAR(255) NOT NULL, createAt BIGINT(20) NOT NULL)'
 
-sql_create_table_tool = 'CREATE TABLE tool (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, version VARCHAR(255), createAt INT(11) NOT NULL)'
+sql_create_table_tool = 'CREATE TABLE tool (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, version VARCHAR(255), createAt BIGINT(20) NOT NULL)'
 
-sql_create_table_log = 'CREATE TABLE log (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, project_id INT(11) NOT NULL, tool_id INT(11) NOT NULL, info JSON)'
+sql_create_table_log = 'CREATE TABLE log (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, project_id INT(11) NOT NULL, tool_id INT(11) NOT NULL, info JSON, createAt BIGINT(20) NOT NULL)'
 
 cursor = conn.cursor(buffered=True)
 cursor.execute(sql_create_database)

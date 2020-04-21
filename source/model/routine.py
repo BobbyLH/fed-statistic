@@ -20,26 +20,38 @@ def routine(fn):
     try:
       cursor = conn.cursor(dictionary=True)
       if fn and str(type(fn)) == "<class 'function'>":
+        hasError = True
         try:
           res = fn(cursor)
+          hasError = False
         except OSError as e:
-          print('System error: ', str(e))
+          res = str(e)
+          print('System error: ', res)
         except ValueError as e:
-          print('Value error: ', str(e))
+          res = str(e)
+          print('Value error: ', res)
         except IndexError as e:
-          print('Index error: ', str(e))
+          res = str(e)
+          print('Index error: ', res)
         except KeyError as e:
-          print('Key error: ', str(e))
+          res = str(e)
+          print('Key error: ', res)
         except MemoryError as e:
-          print('Memory error: ', str(e))
+          res = str(e)
+          print('Memory error: ', res)
         except LookupError as e:
-          print('Lookup error: ', str(e))
+          res = str(e)
+          print('Lookup error: ', res)
         except:
-          print('Unknow error: ', str(sys.exc_info()[0]))
-          raise TypeError
+          res = str(sys.exc_info()[0])
+          print('Unknown error: ', res)
+
       conn.commit()
       conn.close()
-      return res
+      if hasError:
+        raise TypeError(res)
+      else:
+        return res
     except:
       conn.rollback()
     

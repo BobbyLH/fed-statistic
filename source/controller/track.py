@@ -17,7 +17,7 @@ def track(
     tool_version,
     project_name,
     project_uuid,
-    info
+    info = json.dumps(info)
   )
   if result == '项目未注册':
     return make_res(result)
@@ -35,11 +35,10 @@ if __name__ == '__main__':
     'commitlint': False,
     'monitor': False
   }
-  info_json = json.dumps(info)
   res = track(
     tool_name = 'hupu-cli',
-    tool_version = '0.0.21',
-    project_name = 'hp-project-834',
-    info = info_json
+    tool_version = '0.0.17',
+    project_name = 'hp-project-870',
+    info = info
   )
   print(res)
