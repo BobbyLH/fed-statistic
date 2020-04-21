@@ -12,6 +12,7 @@ from utils.ret import make_res
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from uuid import UUID
 
 app_name = 'hp-fed-statistic'
 server = Flask(app_name)
@@ -116,6 +117,12 @@ def do_response (data):
   return Response(data, content_type='application/json; charset=utf-8')
 
 # add
+class UUIDEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, UUID):
+      return obj.hex
+    return json.JSONEncoder.default(self, obj)
+
 @server.route('/add', methods=['POST'])
 def add():
   if request.method != 'POST':
@@ -126,7 +133,7 @@ def add():
     return do_response('请传入正确的数据格式')
 
   data = json.loads(request.data)
-  return do_response(json.dumps(c_add.add(**data), ensure_ascii = False))
+  return do_response(json.dumps(c_add.add(**data), ensure_ascii = False, cls=UUIDEncoder))
 
 # track
 @server.route('/track', methods=['POST'])
