@@ -104,7 +104,6 @@ home(
 # view - tables
 for route in view_dict:
   view = view_dict[route]
-  print(view)
   table(
     get_data = view['get_data'],
     name = app_name,
