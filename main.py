@@ -17,14 +17,8 @@ from uuid import UUID
 app_name = 'hp-fed-statistic'
 server = Flask(app_name)
 
-# view - home
-home(
-  app_name,
-  server = server,
-  routes_pathname_prefix = '/'
-)
+df_default = pd.DataFrame({'数据读取失败': ['测试数据1', '测试数据2'], '请检查你的数据库连接': ['测试数据3', '测试数据4']})
 
-# view - list - hupu-cli
 def generate_df_list(tool_name):
   res = c_detail.detail_tool(tool_name)
   if res['ret'] == 0:
@@ -44,17 +38,8 @@ def generate_df_list(tool_name):
         lst.append(loc)
       row.append(lst)
     return pd.DataFrame(np.array(row), columns=col)
-  return None
+  return df_default
 
-table(
-  get_data = lambda : generate_df_list('hupu-cli'),
-  name = app_name,
-  server = server,
-  title=f'虎扑前端 hupu-cli 版本列表',
-  routes_pathname_prefix = '/list/hupu-cli/'
-)
-
-# view - detail - hupu-cli
 def generate_df_detail(tool_name):
   res = c_detail.detail_log(tool_name)
   if res['ret'] == 0:
@@ -71,17 +56,8 @@ def generate_df_detail(tool_name):
         origin = row[ind]
         row[ind] = origin + 1
     return pd.DataFrame(np.array([row]), columns=col)
-  return None
+  return df_default
 
-table(
-  get_data = lambda : generate_df_detail('hupu-cli'),
-  name = app_name,
-  server = server,
-  title=f'虎扑前端 hupu-cli 使用详情',
-  routes_pathname_prefix = '/detail/hupu-cli/'
-)
-
-# view - list - project
 def generate_df_list_project(tool_name):
   res = c_detail.detail_project(tool_name)
   if res['ret'] == 0:
@@ -101,15 +77,41 @@ def generate_df_list_project(tool_name):
         lst.append(loc)
       row.append(lst)
     return pd.DataFrame(np.array(row), columns=col)
-  return None
+  return df_default
 
-table(
-  get_data = lambda : generate_df_list_project('hupu-cli'),
-  name = app_name,
+view_dict = {
+  '/list/hupu-cli/': {
+    'title': '虎扑前端 hupu-cli 版本列表',
+    'get_data': lambda : generate_df_list('hupu-cli')
+  },
+  '/list/project/': {
+    'title': 'hupu-cli 应用项目列表',
+    'get_data': lambda : generate_df_list_project('hupu-cli')
+  },
+  '/detail/hupu-cli/': {
+    'title': '虎扑前端 hupu-cli 使用详情',
+    'get_data': lambda : generate_df_detail('hupu-cli')
+  },
+}
+
+# view - home
+home(
+  app_name,
   server = server,
-  title=f'hupu-cli 应用项目列表',
-  routes_pathname_prefix = '/list/project/'
+  routes_pathname_prefix = '/'
 )
+
+# view - tables
+for route in view_dict:
+  view = view_dict[route]
+  print(view)
+  table(
+    get_data = view['get_data'],
+    name = app_name,
+    server = server,
+    title = view['title'],
+    routes_pathname_prefix = route
+  )
 
 def do_response (data):
   if type(data) == "<class 'str'>":
