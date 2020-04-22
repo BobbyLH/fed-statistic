@@ -114,8 +114,8 @@ for route in view_dict:
 
 def do_response (data):
   if type(data) is str:
-    return Response(json.dumps(make_res(data), ensure_ascii = False), content_type='application/json; charset=utf-8')
-  return Response(data, content_type='application/json; charset=utf-8')
+    data = make_res(data)
+  return Response(json.dumps(data, ensure_ascii = False, cls=UUIDEncoder), content_type='application/json; charset=utf-8')
 
 # add
 class UUIDEncoder(json.JSONEncoder):
@@ -134,7 +134,7 @@ def add():
     return do_response('请传入正确的数据格式')
 
   data = json.loads(request.data)
-  return do_response(json.dumps(c_add.add(**data), ensure_ascii = False, cls=UUIDEncoder))
+  return do_response(c_add.add(**data))
 
 # track
 @server.route('/track', methods=['POST'])
@@ -147,4 +147,4 @@ def track():
     return do_response('请传入正确的数据格式')
 
   data = json.loads(request.data)
-  return do_response(json.dumps(c_track.track(**data), ensure_ascii = False))
+  return do_response(c_track.track(**data))

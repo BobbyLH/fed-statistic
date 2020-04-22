@@ -15,7 +15,12 @@ ret_list = {
 def make_res(msg = '成功', data = None):
   res = {}
   res['msg'] = msg
-  res['ret'] = ret_list[msg] if not ret_list[msg] == None else 50000
+  for key in ret_list.keys():
+    if msg == key:
+      res['ret'] = ret_list[key]
+      break
+  if not 'ret' in res:
+    res['ret'] = 50000
   if data:
     res['data'] = data
   return res
