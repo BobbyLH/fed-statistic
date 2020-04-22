@@ -108,7 +108,7 @@ eval "$(pipenv --completion)"
 pip3.7 install gunicorn
 ```
 
-- clone 项目至服务器，而后初始化启动项目
+### clone 项目至服务器，而后初始化启动项目
 ```shell
 git clone git@github.com:BobbyLH/fed-statistic.git
 
@@ -124,4 +124,7 @@ gunicorn -w 2 -b 0.0.0.0:5000 main:server --daemon
 ### 杀掉 gunicorn 进程
 ```shell
 pkill gunicorn
+
+# 检测是否停止
+ps ax|grep gunicorn
 ```
