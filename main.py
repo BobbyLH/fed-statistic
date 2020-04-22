@@ -113,7 +113,7 @@ for route in view_dict:
   )
 
 def do_response (data):
-  if type(data) == "<class 'str'>":
+  if type(data) is str:
     return Response(json.dumps(make_res(data), ensure_ascii = False), content_type='application/json; charset=utf-8')
   return Response(data, content_type='application/json; charset=utf-8')
 

@@ -1,3 +1,4 @@
+import types
 import sys
 sys.path.append('./source/config')
 import mysql.connector as mysql
@@ -19,7 +20,7 @@ def routine(fn):
     res = None
     try:
       cursor = conn.cursor(dictionary=True)
-      if fn and str(type(fn)) == "<class 'function'>":
+      if fn and isinstance(fn, types.FunctionType):
         hasError = True
         try:
           res = fn(cursor)
