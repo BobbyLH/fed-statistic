@@ -1,4 +1,4 @@
-from uuid import uuid4
+from uuid import uuid4, UUID
 from routine import routine
 from sqls import (sql_add_project,
 sql_add_tool,
@@ -74,7 +74,7 @@ def create_track(
     # 校验项目是否注册
     sql = None
     if project_uuid:
-      sql = sql_find_project(project_uuid)
+      sql = sql_find_project(UUID(project_uuid))
     elif project_name:
       sql = sql_find_project_unsafe(project_name)
     else:
