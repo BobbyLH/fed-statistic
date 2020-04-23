@@ -11,8 +11,9 @@ def add(
   if type == 'project':
     project_name = kwargs['project_name']
     project_type = kwargs['project_type']
+    author = kwargs['author']
     try:
-      uuid = create_project(project_name, project_type)
+      uuid = create_project(project_name, project_type, author)
 
       if not uuid:
         return make_res('未能成功入库，请重试')

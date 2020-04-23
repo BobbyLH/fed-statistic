@@ -35,6 +35,8 @@ def generate_df_list(tool_name):
         if (key == 'createAt'):
           lst.append(str(datetime.fromtimestamp(loc)))
           continue
+        if not loc:
+          loc = '-'
         lst.append(loc)
       row.append(lst)
     return pd.DataFrame(np.array(row), columns=col)
@@ -74,6 +76,8 @@ def generate_df_list_project(tool_name):
         if (key == 'createAt'):
           lst.append(str(datetime.fromtimestamp(loc)))
           continue
+        if not loc:
+          loc = '-'
         lst.append(loc)
       row.append(lst)
     return pd.DataFrame(np.array(row), columns=col)

@@ -26,7 +26,7 @@ sql_grant_database = 'GRANT ALL ON hp_fed_statistic.* TO hupu@localhost'
 
 sql_use_database = 'USE hp_fed_statistic'
 
-sql_create_table_project = 'CREATE TABLE project (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, type VARCHAR(255), uuid VARCHAR(255) NOT NULL, createAt BIGINT(20) NOT NULL)'
+sql_create_table_project = 'CREATE TABLE project (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, type VARCHAR(255), uuid VARCHAR(255) NOT NULL, author VARCHAR(255), createAt BIGINT(20) NOT NULL)'
 
 sql_create_table_tool = 'CREATE TABLE tool (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, version VARCHAR(255), createAt BIGINT(20) NOT NULL)'
 

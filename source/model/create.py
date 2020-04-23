@@ -11,14 +11,15 @@ sql_update_log)
 
 def create_project(
   project_name,
-  project_type = None
+  project_type = None,
+  author = None
 ):
   if not project_name:
     raise ValueError('Please pass correct project name!')
   
   def add(cursor):
     project_uuid = uuid4()
-    sql = sql_add_project(project_name, project_type, project_uuid)
+    sql = sql_add_project(project_name, project_type, project_uuid, author)
     cursor.execute(sql)
     return project_uuid
   return routine(add)
