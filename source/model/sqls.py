@@ -79,3 +79,10 @@ def sql_update_log(log_id, info):
   if not log_id or not info:
     raise ValueError('lack critical parameters')
   return f'UPDATE log SET info={info} WHERE id={log_id}'
+
+def sql_find_log_join_tool(tool_name, tool_version = None):
+  if not tool_name:
+    raise ValueError('lack critical parameters')
+  if tool_version:
+    return f'SELECT * FROM log LEFT JOIN tool ON log.tool_id=tool.id WHERE name="{tool_name}" AND version="{tool_version}"'
+  return f'SELECT * FROM log LEFT JOIN tool ON log.tool_id=tool.id WHERE name="{tool_name}"'
