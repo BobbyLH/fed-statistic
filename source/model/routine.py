@@ -43,6 +43,9 @@ def routine(fn):
         except LookupError as e:
           res = str(e)
           print('Lookup error: ', res)
+        except NameError as e:
+          res = str(e)
+          print('Name error: ', res)
         except:
           res = str(sys.exc_info()[0])
           print('Unknown error: ', res)

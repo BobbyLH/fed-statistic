@@ -88,3 +88,18 @@ def sql_find_log_join_tool(tool_name, tool_version = None):
   if tool_version:
     return f'SELECT * FROM log LEFT JOIN tool ON log.tool_id=tool.id WHERE name="{tool_name}" AND version="{tool_version}"'
   return f'SELECT * FROM log LEFT JOIN tool ON log.tool_id=tool.id WHERE name="{tool_name}"'
+
+def sql_find_log_id_join_project(uuid):
+  if not uuid:
+    raise ValueError('lack critical parameters')
+  return f'SELECT log.id FROM log LEFT JOIN project ON log.project_id=project.id WHERE uuid="{uuid}"'
+
+def sql_delete_project(uuid):
+  if not uuid:
+    raise ValueError('lack critical parameters')
+  return f'DELETE FROM project WHERE uuid="{uuid}"'
+
+def sql_delete_log(ids):
+  if not ids or len(ids) == 0:
+    raise ValueError('lack critical parameters')
+  return f'DELETE FROM log WHERE id IN ({ids})'

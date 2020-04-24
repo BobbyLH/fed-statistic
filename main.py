@@ -8,6 +8,7 @@ from view.table import table
 import controller.add as c_add
 import controller.detail as c_detail
 import controller.track as c_track
+import controller.remove as c_remove
 from utils.ret import make_res
 import pandas as pd
 import numpy as np
@@ -152,3 +153,16 @@ def track():
 
   data = json.loads(request.data)
   return do_response(c_track.track(**data))
+
+# remove
+@server.route('/remove', methods=['DELETE'])
+def remove():
+  if request.method != 'DELETE':
+    return do_response('请求方法不匹配')
+
+  content_type = request.content_type
+  if not content_type == 'application/json':
+    return do_response('请传入正确的数据格式')
+
+  data = json.loads(request.data)
+  return do_response(c_remove.remove(**data))
