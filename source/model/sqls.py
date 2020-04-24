@@ -6,6 +6,8 @@ def sql_add_project(project_name, project_type, project_uuid, author):
   if not project_name or not project_type or not project_uuid:
     raise ValueError('lack critical parameters')
   ts = int(time.time() * base_ts)
+  if not author:
+    return str('INSERT INTO project(name, type, uuid, createAt) VALUES ("{}", "{}", "{}", {})').format(project_name, project_type, project_uuid, ts)
   return str('INSERT INTO project(name, type, uuid, author, createAt) VALUES ("{}", "{}", "{}", "{}", {})').format(project_name, project_type, project_uuid, author, ts)
 
 def sql_find_project_unsafe(project_name):

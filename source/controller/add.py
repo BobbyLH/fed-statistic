@@ -9,10 +9,10 @@ def add(
   **kwargs
 ):
   if type == 'project':
-    project_name = kwargs['project_name']
-    project_type = kwargs['project_type']
-    author = kwargs['author']
     try:
+      project_name = kwargs['project_name']
+      project_type = kwargs['project_type']
+      author = kwargs['author'] if 'author' in kwargs else None
       uuid = create_project(project_name, project_type, author)
 
       if not uuid:
@@ -22,9 +22,9 @@ def add(
     except ValueError as e:
       return make_res(e)
   elif type == 'tool':
-    tool_name = kwargs['tool_name']
-    tool_version = kwargs['tool_version']
     try:
+      tool_name = kwargs['tool_name']
+      tool_version = kwargs['tool_version']
       tool_id = create_tool(tool_name, tool_version)
 
       if not tool_id:
