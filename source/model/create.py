@@ -40,6 +40,7 @@ def create_tool(
       tool_id = cursor.lastrowid
     else:
       tool_id = info_tool['id']
+    cursor.close()
     return tool_id
 
   return routine(make_tool)
@@ -60,6 +61,7 @@ def create_log(
     )
     cursor.execute(sql)
     isAffect = cursor.rowcount
+    cursor.close()
     return bool(isAffect)
 
   return routine(make_log)
@@ -79,9 +81,10 @@ def create_track(
     elif project_name:
       sql = sql_find_project_unsafe(project_name)
     else:
-      return '项目未注册'
+      return '参数错误'
     cursor.execute(sql)
     info_project = cursor.fetchone()
+    cursor.nextset()
 
     if not info_project:
       return '项目未注册'
@@ -91,10 +94,12 @@ def create_track(
       tool_id = create_tool(tool_name, tool_version)
 
       # 记录日志
-      return create_log(
+      isSuc = create_log(
         project_id,
         tool_id,
         info
       )
+      cursor.close()
+      return '成功' if isSuc else None
 
   return routine(make_track)

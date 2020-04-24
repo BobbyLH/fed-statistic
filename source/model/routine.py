@@ -2,6 +2,7 @@ import types
 import sys
 sys.path.append('./source/config')
 import mysql.connector as mysql
+from mysql.connector.errors import Error
 from database import dev, prod
 
 env = dev
@@ -46,12 +47,39 @@ def routine(fn):
         except NameError as e:
           res = str(e)
           print('Name error: ', res)
+        except mysql.DataError as e:
+          res = str(e)
+          print('Mysql DataError: ', res)
+        except mysql.OperationalError as e:
+          res = str(e)
+          print('Mysql OperationalError: ', res)
+        except mysql.InternalError as e:
+          res = str(e)
+          print('Mysql InternalError: ', res)
+        except mysql.IntegrityError as e:
+          res = str(e)
+          print('Mysql IntegrityError: ', res)
+        except mysql.NotSupportedError as e:
+          res = str(e)
+          print('Mysql NotSupportedError: ', res)
+        except mysql.ProgrammingError as e:
+          res = str(e)
+          print('Mysql ProgrammingError: ', res)
+        except mysql.Error as e:
+          res = str(e)
+          print('Mysql Error: ', res)
         except:
-          res = str(sys.exc_info()[0])
+          res = str(sys.exc_info())
           print('Unknown error: ', res)
 
-      conn.commit()
-      conn.close()
+      try:
+        conn.commit()
+      except:
+        res = str(sys.exc_info())
+        print('Mysql commit error: ', res)
+      finally:
+        conn.close()
+
       if hasError:
         raise TypeError(res)
       else:

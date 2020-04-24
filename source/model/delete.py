@@ -22,12 +22,6 @@ def delete_project(
     if not info_project:
       return '项目未注册'
 
-    sql = sql_delete_project(uuid)
-    cursor.execute(sql)
-    isAffect = cursor.rowcount
-    if not bool(isAffect):
-      return '项目删除失败'
-
     sql = sql_find_log_id_join_project(uuid)
     cursor.execute(sql)
     ids = cursor.fetchall()
@@ -39,6 +33,13 @@ def delete_project(
       ids_str = ids_str[:-1]
       sql = sql_delete_log(ids_str)
       cursor.execute(sql)
+
+    sql = sql_delete_project(uuid)
+    cursor.execute(sql)
+    isAffect = cursor.rowcount
+    if not bool(isAffect):
+      return '项目删除失败'
+
     return '成功'
 
   return routine(del_project)
