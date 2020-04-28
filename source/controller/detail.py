@@ -20,6 +20,10 @@ def detail_tool(
 ):
   info_tools = read_tool(tool_name, tool_version)
   if info_tools:
+    info_tools.sort(
+      key = lambda val: val['createAt'],
+      reverse = True
+    )
     return make_res('成功', info_tools)
   else:
     return make_res('未找到工具信息')
@@ -41,6 +45,10 @@ def detail_project(
             info_projects.append(read_project(project_id = project_id))
       else:
         info_projects.append(read_project(project_id = project_id))
+    info_projects.sort(
+      key = lambda val: val['createAt'],
+      reverse = True
+    )
     return make_res('成功', info_projects)
   return make_res('未找到工具信息')
 
