@@ -7,7 +7,7 @@ from database import dev, prod
 
 env = dev
 
-def routine(fn):
+def transaction(fn):
   try:
     conn = mysql.connect(
       host = env['host'],
