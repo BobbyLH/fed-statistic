@@ -118,7 +118,7 @@ for route in view_dict:
     server = server,
     title = view['title'],
     routes_pathname_prefix = route,
-    max_rows = view['max_rows'] or 30
+    max_rows = view['max_rows']
   )
 
 def do_response (data):
