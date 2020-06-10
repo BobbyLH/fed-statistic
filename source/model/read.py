@@ -4,6 +4,7 @@ sql_find_log_tool,
 sql_find_tool,
 sql_find_log_tools,
 sql_find_project,
+sql_find_all_project,
 sql_find_log_join_tool
 )
 
@@ -36,6 +37,14 @@ def read_project(
     return cursor.fetchone()
 
   return transaction(get_project)
+
+def read_projects():
+  def get_projects(cursor):
+    sql = sql_find_all_project()
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+  return transaction(get_projects)
 
 def read_log_tool(
   name,

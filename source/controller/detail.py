@@ -1,7 +1,7 @@
 import sys
 sys.path.append('./source/model')
 sys.path.append('./source/utils')
-from read import read_tool, read_project, read_log_tool
+from read import read_tool, read_project, read_log_tool, read_projects
 from ret import make_res
 
 def detail_log(
@@ -34,6 +34,7 @@ def detail_project(
 ):
   info_projects = []
   info_tools = read_log_tool(tool_name, tool_version)
+  projects = read_projects()
   if info_tools:
     for item in info_tools:
       project_id = item['project_id']
@@ -42,7 +43,9 @@ def detail_project(
           if info and info['id'] == project_id:
             break
           if ind + 1 == len(info_projects):
-            info_projects.append(read_project(project_id = project_id))
+            for project in projects:
+              if (project['id'] == project_id):
+                info_projects.append(project)
       else:
         info_projects.append(read_project(project_id = project_id))
     info_projects.sort(
