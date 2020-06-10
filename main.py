@@ -117,7 +117,8 @@ for route in view_dict:
     name = app_name,
     server = server,
     title = view['title'],
-    routes_pathname_prefix = route
+    routes_pathname_prefix = route,
+    max_rows = view['max_rows'] if 'max_rows' in view else 30
   )
 
 def do_response (data):
