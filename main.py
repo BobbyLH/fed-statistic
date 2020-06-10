@@ -40,6 +40,7 @@ def generate_df_list(tool_name):
           loc = '-'
         lst.append(loc)
       row.append(lst)
+    row = row[:30]
     return pd.DataFrame(np.array(row), columns=col)
   return df_default
 
@@ -81,16 +82,17 @@ def generate_df_list_project(tool_name):
           loc = '-'
         lst.append(loc)
       row.append(lst)
+    row = row[:30]
     return pd.DataFrame(np.array(row), columns=col)
   return df_default
 
 view_dict = {
   '/list/hupu-cli/': {
-    'title': '虎扑前端 hupu-cli 版本列表',
+    'title': '虎扑前端 hupu-cli 版本列表 (latest 30)',
     'get_data': lambda : generate_df_list('hupu-cli')
   },
   '/list/project/': {
-    'title': 'hupu-cli 应用项目列表',
+    'title': 'hupu-cli 应用项目列表 (latest 30)',
     'get_data': lambda : generate_df_list_project('hupu-cli')
   },
   '/detail/hupu-cli/': {
