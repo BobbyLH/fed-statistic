@@ -82,7 +82,7 @@ def generate_df_list_project(tool_name):
           loc = '-'
         lst.append(loc)
       row.append(lst)
-    row = row[:30]
+    row = row[:50]
     return pd.DataFrame(np.array(row), columns=col)
   return df_default
 
@@ -92,8 +92,9 @@ view_dict = {
     'get_data': lambda : generate_df_list('hupu-cli')
   },
   '/list/project/': {
-    'title': 'hupu-cli 应用项目列表 (latest 30)',
-    'get_data': lambda : generate_df_list_project('hupu-cli')
+    'title': 'hupu-cli 应用项目列表 (latest 50)',
+    'get_data': lambda : generate_df_list_project('hupu-cli'),
+    'max_rows': 50
   },
   '/detail/hupu-cli/': {
     'title': '虎扑前端 hupu-cli 使用详情',
@@ -116,7 +117,8 @@ for route in view_dict:
     name = app_name,
     server = server,
     title = view['title'],
-    routes_pathname_prefix = route
+    routes_pathname_prefix = route,
+    max_rows = view['max_rows'] or 30
   )
 
 def do_response (data):
