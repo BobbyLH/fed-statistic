@@ -11,6 +11,7 @@ sql_update_log)
 
 def create_project(
   project_name,
+  project_uuid = None,
   project_type = None,
   author = None
 ):
@@ -18,8 +19,8 @@ def create_project(
     raise ValueError('Please pass correct project name!')
   
   def add(cursor):
-    project_uuid = uuid4()
-    sql = sql_add_project(project_name, project_type, project_uuid, author)
+    uuid = project_uuid if project_uuid else uuid4()
+    sql = sql_add_project(project_name, project_type, uuid, author)
     cursor.execute(sql)
     return project_uuid
   return transaction(add)
@@ -77,7 +78,11 @@ def create_track(
     # 校验项目是否注册
     sql = None
     if project_uuid:
-      sql = sql_find_project(UUID(project_uuid))
+      try:
+        uuid = UUID(project_uuid)
+      except:
+        uuid = project_uuid
+      sql = sql_find_project(uuid)
     elif project_name:
       sql = sql_find_project_unsafe(project_name)
     else:

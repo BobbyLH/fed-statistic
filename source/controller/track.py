@@ -36,7 +36,7 @@ if __name__ == '__main__':
   res = track(
     tool_name = 'hupu-cli',
     tool_version = '0.0.17',
-    project_name = 'hp-project-737',
+    project_name = 'hp-project-381',
     info = info
   )
   print(res)
