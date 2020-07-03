@@ -11,10 +11,12 @@ def track(
   project_name = None,
   project_uuid = None,
   project_version = None,
+  project_type = None,
   info = None
 ):
   infoDict = info if info else dict()
   infoDict['project_version'] = project_version
+  infoDict['project_type'] = project_type
   result = create_track(
     tool_name,
     tool_version,
