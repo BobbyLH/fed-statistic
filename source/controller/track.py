@@ -10,14 +10,17 @@ def track(
   tool_version,
   project_name = None,
   project_uuid = None,
+  project_version = None,
   info = None
 ):
+  infoDict = info if info else dict()
+  infoDict['project_version'] = project_version
   result = create_track(
     tool_name,
     tool_version,
     project_name,
     project_uuid,
-    info = json.dumps(info)
+    info = json.dumps(infoDict)
   )
   if result:
     return make_res(result)
