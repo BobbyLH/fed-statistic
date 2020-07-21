@@ -16,7 +16,7 @@ def transaction(fn):
       database = env['database']
     )
   except:
-    print('The database connect error: ', str(sys.exc_info()[0]))
+    print('The database connect error: ', str(sys.exc_info()))
   else:
     res = None
     try:
