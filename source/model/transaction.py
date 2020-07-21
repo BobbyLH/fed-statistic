@@ -5,7 +5,7 @@ import mysql.connector as mysql
 from mysql.connector.errors import Error
 from database import dev, prod
 
-env = dev
+env = prod
 
 def transaction(fn):
   try:
