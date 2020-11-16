@@ -49,7 +49,7 @@ def generate_df_detail(tool_name):
   if res['ret'] == 0:
     data = res['data']
     total = len(data)
-    col = ['init', 'dev', 'new', 'build', 'release', 'total']
+    col = ['init', 'dev', 'start', 'new', 'build', 'release', 'total']
     row = [0, 0, 0, 0, 0, total]
     for item in data:
       info = item['info']
@@ -88,16 +88,16 @@ def generate_df_list_project(tool_name):
 
 view_dict = {
   '/list/hupu-cli/': {
-    'title': '虎扑前端 hupu-cli 版本列表 (latest 30)',
+    'title': 'hupu-cli 版本列表 (Latest 30)',
     'get_data': lambda : generate_df_list('hupu-cli')
   },
   '/list/project/': {
-    'title': 'hupu-cli 应用项目列表 (latest 50)',
+    'title': '接入 hupu-cli 项目一览 (Latest 100)',
     'get_data': lambda : generate_df_list_project('hupu-cli'),
-    'max_rows': 50
+    'max_rows': 100
   },
   '/detail/hupu-cli/': {
-    'title': '虎扑前端 hupu-cli 使用详情',
+    'title': 'hupu-cli 使用详情',
     'get_data': lambda : generate_df_detail('hupu-cli')
   },
 }
