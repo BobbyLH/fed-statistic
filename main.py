@@ -50,7 +50,7 @@ def generate_df_detail(tool_name):
     data = res['data']
     total = len(data)
     col = ['init', 'dev', 'start', 'new', 'build', 'release', 'total']
-    row = [0, 0, 0, 0, 0, total]
+    row = [0, 0, 0, 0, 0, 0, total]
     for item in data:
       info = item['info']
       if info:
