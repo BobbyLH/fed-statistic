@@ -82,7 +82,7 @@ def generate_df_list_project(tool_name):
           loc = '-'
         lst.append(loc)
       row.append(lst)
-    row = row[:50]
+    row = row[:100]
     return pd.DataFrame(np.array(row), columns=col)
   return df_default
 
